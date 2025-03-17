@@ -43,7 +43,13 @@ pub struct Sandbox {
 }
 
 fn fonts() -> Vec<Font> {
+    let mut rusts_type_system_is_almighty_and_must_be_praised_in_all_cases = vec![];
+    if let Ok(noto) = std::fs::read("/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf") {
+        rusts_type_system_is_almighty_and_must_be_praised_in_all_cases.push(std::borrow::Cow::Owned(noto));
+    }
 	typst_assets::fonts()
+        .map(std::borrow::Cow::Borrowed)
+        .chain(rusts_type_system_is_almighty_and_must_be_praised_in_all_cases)
 		.flat_map(|bytes| {
 			let buffer = Bytes::new(bytes);
 			let face_count = ttf_parser::fonts_in_collection(&buffer).unwrap_or(1);

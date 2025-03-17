@@ -22,6 +22,8 @@ RUN cargo build --release --workspace --config git-fetch-with-cli=true
 # ============ Run Stage ============
 FROM debian:bookworm-slim as run
 
+RUN apt-get -y update && apt-get install -y --no-install-recommends fonts-noto-color-emoji && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /bot
 CMD [ "/bot/typst-bot" ]
 
